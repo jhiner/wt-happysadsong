@@ -83,6 +83,8 @@ module.exports = function (context, callback) {
               console.log ('Score? ' + songScore)
 
               var result = {
+                  artist: artist,
+                  title: title,
                   happyOrSad: songType,
                   songScore: songScore
               }

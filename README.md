@@ -12,7 +12,7 @@ And then invoke it at [this url] (https://webtask.it.auth0.com/api/run/wt-hinerm
 
 For example, here's a particularly sad song: [Losing It by Rush] (https://webtask.it.auth0.com/api/run/wt-hinerman-gmail_com-0/happySadSongDemo?webtask_no_cache=1&artist=Rush&title=Losing%20It)
 
-And a happier song: [Losing It by Rush] (https://webtask.it.auth0.com/api/run/wt-hinerman-gmail_com-0/happySadSongDemo?webtask_no_cache=1&artist=Rush&title=Losing%20It)
+And a happier song: [The Spirit of Radio by Rush] (https://webtask.it.auth0.com/api/run/wt-hinerman-gmail_com-0/happySadSongDemo?webtask_no_cache=1&artist=Rush&title=the%20spirit%20of%20radio)
 
 ## Interpreting the results
 
