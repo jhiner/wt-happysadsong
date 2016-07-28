@@ -58,13 +58,12 @@ module.exports = function (context, callback) {
                     var songPercentage = Math.floor(songScore*100) + '%'
 
                     if ('positive'===songType) {
-                      songType = 'a happy song'
+                      songType = 'happy song'
                     } else if ('negative' === songType) {
-                      songType = 'a sad song'
+                      songType = 'sad song'
                     } else {
                       songType = 'neither happy nor sad song'
                     }
-
 
                     console.log ('Happy or sad? ' + songType)
                     console.log ('Score? ' + songPercentage)
