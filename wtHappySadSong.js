@@ -6,7 +6,7 @@ module.exports = function (context, callback) {
     var artist = context.data.artist
 
     if (!title || !artist) {
-        return callback(null, 'Please provide both artist and title. I will give you back a happy/sad determination and a happy/sad')
+        return callback(null, 'Please provide both artist and title. I will give you back a happy/sad determination and a score')
     } 
 
     // get the track id from musixmatch
@@ -45,10 +45,12 @@ module.exports = function (context, callback) {
               return callback(null,  {'Error':'Error while invoking musixmatch api'})
             } 
              var lyrics = bodyJSON.message.body.lyrics.lyrics_body
+             // remove this warning from the lyrics so it does not impact the score
+             var fixedLyrics = lyrics.replace('******* This Lyrics is NOT for Commercial use *******','')
             
              // now invoke the twinword endpt
              request.get({
-               url: 'https://twinword-sentiment-analysis.p.mashape.com/analyze/?text=' + lyrics + '&track_id=' + trackInfo.track_id,
+               url: 'https://twinword-sentiment-analysis.p.mashape.com/analyze/?text=' + fixedLyrics + '&track_id=' + trackInfo.track_id,
                headers: {
                     'X-Mashape-Key': context.data.MASHAPE_KEY
                 },
@@ -64,8 +66,10 @@ module.exports = function (context, callback) {
                 return callback(null,  {'ErrorMessage':'Error while invoking twinword api'})
               } 
 
+              console.log(fixedLyrics)
+
               var songType = bodyJSON.type
-              var songPercentage = Math.floor(bodyJSON.score*100) + '%'
+              var songScore = Math.floor(bodyJSON.score*100)
 
               if ('positive' === songType) {
                 songType = 'happy song'
@@ -76,11 +80,11 @@ module.exports = function (context, callback) {
               }
 
               console.log ('Happy or sad? ' + songType)
-              console.log ('Score? ' + songPercentage)
+              console.log ('Score? ' + songScore)
 
               var result = {
                   happyOrSad: songType,
-                  scorePercentage: songPercentage
+                  songScore: songScore
               }
 
               return callback(null, result)
