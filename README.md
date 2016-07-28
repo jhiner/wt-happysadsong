@@ -1,6 +1,6 @@
 ## Synopsis
 
-This is a simple demo of using webtask. It uses two services: [musixmatch] (https://developer.musixmatch.com/) and [twinword] (https://www.twinword.com/). You provide a song title and artist, and it will fetch the lyrics (with musixmatch) and analyze them (with twinword) and let you know if it's a "happy" or "sad" song, or maybe neither. 
+This is a simple demo using webtask.io. It uses two services: [musixmatch] (https://developer.musixmatch.com/) and [twinword] (https://www.twinword.com/). You provide a song title and artist, and it will fetch the lyrics (with musixmatch) and analyze them (with twinword) and let you know if it's a "happy" or "sad" song, or maybe neither. 
 
 ## Creating the webtask
 
