@@ -1,0 +1,16 @@
+{
+  "name": "auth0hack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gettrack.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "2.9.26",
+    "request": "^2.74.0",
+    "request-promise": "1.0.2"
+  }
+}
