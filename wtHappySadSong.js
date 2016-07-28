@@ -11,7 +11,7 @@ module.exports = function (context, callback) {
 
     // get the track id from musixmatch
     request.get({
-      url: 'http://api.musixmatch.com/ws/1.1/track.searssch?apikey=' + context.data.MUSIXMATCH_KEY + '&q_track=' + title + '&q_artist=' + artist + '&f_has_lyrics=1'
+      url: 'http://api.musixmatch.com/ws/1.1/track.search?apikey=' + context.data.MUSIXMATCH_KEY + '&q_track=' + title + '&q_artist=' + artist + '&f_has_lyrics=1'
     }, function(err, response, body) {
         var bodyJSON = JSON.parse(body)
       if (err) {
