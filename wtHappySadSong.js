@@ -22,6 +22,11 @@ module.exports = function (context, callback) {
         console.dir(bodyJSON)
         return callback(null,  {'Error':'Error while invoking musixmatch api'})
       } 
+        console.dir(bodyJSON)
+
+          if (bodyJSON.message.header.available == '0') {
+            return callback(null, {'Error':'Track not found'})
+          }
 
           var trackInfo = bodyJSON.message.body.track_list[0].track
           
