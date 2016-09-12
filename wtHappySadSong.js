@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('request')
+const request = require('request');
 const rp = require('request-promise');
 
 module.exports = function (context, callback) {
@@ -32,8 +32,8 @@ module.exports = function (context, callback) {
     console.log('about to invoke api call to get track id');
     rp(options)
       .then(function (body) {
-        var bodyJSON = JSON.parse(body);
-        console.dir(bodyJSON);
+
+        var bodyJSON = body; ;
 
         if (bodyJSON.message.header.status_code != '200') {
           return callback(null,  {'Error':'Error while invoking musixmatch api'});
@@ -61,14 +61,9 @@ module.exports = function (context, callback) {
         
         return rp(options).then(function (body) {
 
-        var bodyJSON = JSON.parse(body);
-
-        if (err) {
-            return callback(null, err);
-        } 
+        var bodyJSON = body;
 
         if (bodyJSON.message.header.status_code != '200') {
-          console.dir(bodyJSON);
           return callback(null,  {'Error':'Error while invoking musixmatch api'});
         } 
 
@@ -78,7 +73,7 @@ module.exports = function (context, callback) {
         
          // now invoke the twinword endpt
          var options = {
-             uri: 'hhttps://twinword-sentiment-analysis.p.mashape.com/analyze/',
+             uri: 'https://twinword-sentiment-analysis.p.mashape.com/analyze/',
              qs: {
                  text: fixedLyrics,
                  track_id: trackInfo.track_id
@@ -92,17 +87,13 @@ module.exports = function (context, callback) {
 
          console.log('about to invoke api call to analyze lyrics');
          return rp(options).then(function (body) {
-        var bodyJSON = JSON.parse(body);
-
-        if (err) {
-          return callback(null, err);
-        } 
+        var bodyJSON = body;
 
         if (bodyJSON.result_code != '200') {
-          console.dir(bodyJSON);
           return callback(null,  {'ErrorMessage':'Error while invoking twinword api'});
         } 
 
+        console.log('lyrics:');
         console.log(fixedLyrics);
 
         var songType = bodyJSON.type;
@@ -126,10 +117,12 @@ module.exports = function (context, callback) {
             songScore: songScore
         }
 
-        return callback(null, result);
+        // return callback(null, result);
+        console.dir(result);
       })
       .catch(function (err) {
-          return callback(null, err);
+          // return callback(null, err);
+          console.dir(err);
       });
     });
   });      
