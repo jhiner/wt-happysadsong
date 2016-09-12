@@ -61,69 +61,69 @@ module.exports = function (context, callback) {
         
         return rp(options).then(function (body) {
 
-        var bodyJSON = body;
+          var bodyJSON = body;
 
-        if (bodyJSON.message.header.status_code != '200') {
-          return callback(null,  {'Error':'Error while invoking musixmatch api'});
-        } 
+          if (bodyJSON.message.header.status_code != '200') {
+            return callback(null,  {'Error':'Error while invoking musixmatch api'});
+          } 
 
-         var lyrics = bodyJSON.message.body.lyrics.lyrics_body;
-         // remove this warning from the lyrics so it does not impact the score
-         var fixedLyrics = lyrics.replace('******* This Lyrics is NOT for Commercial use *******','');
-        
-         // now invoke the twinword endpt
-         var options = {
-             uri: 'https://twinword-sentiment-analysis.p.mashape.com/analyze/',
-             qs: {
-                 text: fixedLyrics,
-                 track_id: trackInfo.track_id
-             },
-             headers: {
-                 'User-Agent': 'Request-Promise',
-                 'X-Mashape-Key': context.data.MASHAPE_KEY
-             },
-             json: true // Automatically parses the JSON string in the response
-         };
+           var lyrics = bodyJSON.message.body.lyrics.lyrics_body;
+           // remove this warning from the lyrics so it does not impact the score
+           var fixedLyrics = lyrics.replace('******* This Lyrics is NOT for Commercial use *******','');
+          
+           // now invoke the twinword endpt
+           var options = {
+               uri: 'https://twinword-sentiment-analysis.p.mashape.com/analyze/',
+               qs: {
+                   text: fixedLyrics,
+                   track_id: trackInfo.track_id
+               },
+               headers: {
+                   'User-Agent': 'Request-Promise',
+                   'X-Mashape-Key': context.data.MASHAPE_KEY
+               },
+               json: true // Automatically parses the JSON string in the response
+           };
 
-         console.log('about to invoke api call to analyze lyrics');
-         return rp(options).then(function (body) {
-        var bodyJSON = body;
+           console.log('about to invoke api call to analyze lyrics');
+           return rp(options).then(function (body) {
+          var bodyJSON = body;
 
-        if (bodyJSON.result_code != '200') {
-          return callback(null,  {'ErrorMessage':'Error while invoking twinword api'});
-        } 
+          if (bodyJSON.result_code != '200') {
+            return callback(null,  {'ErrorMessage':'Error while invoking twinword api'});
+          } 
 
-        console.log('lyrics:');
-        console.log(fixedLyrics);
+          console.log('lyrics:');
+          console.log(fixedLyrics);
 
-        var songType = bodyJSON.type;
-        var songScore = Math.floor(bodyJSON.score*100);
+          var songType = bodyJSON.type;
+          var songScore = Math.floor(bodyJSON.score*100);
 
-        if ('positive' === songType) {
-          songType = 'happy song';
-        } else if ('negative' === songType) {
-          songType = 'sad song';
-        } else {
-          songType = 'neither happy nor sad song';
-        }
+          if ('positive' === songType) {
+            songType = 'happy song';
+          } else if ('negative' === songType) {
+            songType = 'sad song';
+          } else {
+            songType = 'neither happy nor sad song';
+          }
 
-        console.log ('Happy or sad? ' + songType);
-        console.log ('Score? ' + songScore);
+          console.log ('Happy or sad? ' + songType);
+          console.log ('Score? ' + songScore);
 
-        var result = {
-            artist: artist,
-            title: title,
-            happyOrSad: songType,
-            songScore: songScore
-        }
+          var result = {
+              artist: artist,
+              title: title,
+              happyOrSad: songType,
+              songScore: songScore
+          }
 
-        // return callback(null, result);
-        console.dir(result);
-      })
-      .catch(function (err) {
-          // return callback(null, err);
-          console.dir(err);
-      });
+          // return callback(null, result);
+          console.dir(result);
+        })
+        .catch(function (err) {
+            // return callback(null, err);
+            console.dir(err);
+        });
     });
   });      
 }
